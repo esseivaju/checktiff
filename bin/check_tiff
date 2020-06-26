@@ -64,19 +64,22 @@ def configure_logging(logfile: str, loglevel: int = logging.WARNING):
 
 
 def validate_tags(path: str, args: dict):
-    with Image.open(path) as img:
-        tags = img.tag
-        tags = set(tags.keys())
-        missing_tags = REQUIRED_TAGS - tags
-        if args.enable_optional:
-            missing_optional = OPTIONAL_TAGS - tags
-            missing_tags |= missing_optional
-        message = str()
+    try:
+        with Image.open(path) as img:
+            tags = img.tag
+            tags = set(tags.keys())
+            missing_tags = REQUIRED_TAGS - tags
+            if args.enable_optional:
+                missing_optional = OPTIONAL_TAGS - tags
+                missing_tags |= missing_optional
+            message = str()
 
-        for tag in missing_tags:
-            message = f"{message}\n{TAGS[tag]}"
-        if missing_tags:
-            logging.warning(f"Missing TAGS for image {path} :{message}")
+            for tag in missing_tags:
+                message = f"\t{message}\n{TAGS[tag]}"
+            if missing_tags:
+                logging.warning(f"Missing TAGS for image {path} :{message}")
+    except Exception as e:
+        logging.critical(f"Couldn't process {path} : {e}")
 
 
 def main(args: dict):
