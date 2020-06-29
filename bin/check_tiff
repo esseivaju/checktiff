@@ -75,7 +75,7 @@ def validate_tags(path: str, args: dict):
             message = str()
 
             for tag in missing_tags:
-                message = f"\t{message}\n{TAGS[tag]}"
+                message = f"{message}\n\t{TAGS[tag]}"
             if missing_tags:
                 logging.warning(f"Missing TAGS for image {path} :{message}")
     except Exception as e:
