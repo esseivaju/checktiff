@@ -6,7 +6,10 @@ Tool to check exif tag of a TIF image database. The script walks through a speci
 Checktiff requires python 3.7 and should be installed in a virtual environment.
 
 ```bash
+conda create -nchecktiff python=3.7
+conda activate checktiff
 pip install .
+check_tiff --help
 ```
 
 ## Usage
